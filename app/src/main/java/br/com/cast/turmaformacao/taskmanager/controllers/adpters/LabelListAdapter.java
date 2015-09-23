@@ -5,11 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import java.util.List;
-
 import br.com.cast.turmaformacao.taskmanager.R;
-import br.com.cast.turmaformacao.taskmanager.controllers.activities.LabelFormActivity;
 import br.com.cast.turmaformacao.taskmanager.model.entities.Label;
 
 public class LabelListAdapter extends BaseAdapter{
@@ -25,8 +22,6 @@ public class LabelListAdapter extends BaseAdapter{
         this.labels = labels;
         this.context = context;
     }
-
-
 
     @Override
     public int getCount() {
