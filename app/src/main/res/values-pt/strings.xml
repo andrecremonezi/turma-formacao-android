@@ -31,5 +31,13 @@
     <string name="msg_user_pass_incorrect">Usuário ou Senha incorreta!</string>
     <string name="msg_user_create_sucess">Usuário criado com sucesso !</string>
     <string name="button_NewLabel">+</string>
+    <string name="lbl_zipCode">Cep</string>
+    <string name="lbl_street">Rua</string>
+    <string name="lbl_city">Cidade</string>
+    <string name="lbl_number">Numero</string>
+    <string name="lbl_neighborhood">Bairro</string>
+    <string name="lbl_state">Estado</string>
+    <string name="lbl_type">Tipo</string>
+    <string name="lbl_buscar">Buscar</string>
 
 </resources>

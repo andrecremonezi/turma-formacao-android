@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="15dp">
 
 
     <EditText
@@ -15,12 +16,74 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/lbl_password"
-        android:password="true" />
+        android:password="true"/>
 
-    <Button
-        android:id="@+id/buttonCriar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/editCep"
+        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/lbl_zipCode"/>
+
+        <Button
+            android:layout_gravity="right"
+            android:textColor="#ffff"
+            android:id="@+id/buttonBuscarCep"
+            android:background="?attr/colorPrimary"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="77dp"
+            android:layout_height="37dp"
+            android:text="@string/lbl_buscar" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/lbl_type"/>
+
+    <EditText
+        android:id="@+id/editStreet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/lbl_street"/>
+
+    <EditText
+        android:id="@+id/editNeighborhood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/lbl_neighborhood"/>
+
+    <EditText
+        android:id="@+id/editCity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/lbl_city"/>
+
+
+    <EditText
+        android:id="@+id/editState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/lbl_state"/>
+
+
+
+    <Button
+        android:layout_gravity="right"
+        android:textColor="#ffff"
+        android:layout_marginTop="20dp"
+        android:id="@+id/buttonCriar"
+        android:background="?attr/colorPrimary"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="141dp"
+        android:layout_height="37dp"
         android:text="@string/lbl_create" />
 
 
