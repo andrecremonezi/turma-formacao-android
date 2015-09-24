@@ -113,10 +113,10 @@ public class LabelFormActivity extends AppCompatActivity{
             LabelBusinessServices.save(this.label);
             onUpdateList();
             Toast.makeText(this, R.string.msg_save_sucessfull,Toast.LENGTH_SHORT).show();
+            this.finish();
         }
     }
 
-    // TESTES
 
     private void bindListViewLabel(){
         listViewLabelList = (ListView) findViewById(R.id.listViewLabeList);
