@@ -2,8 +2,10 @@ package br.com.cast.turmaformacao.taskmanager.controllers.activities;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -18,7 +20,10 @@ import java.util.List;
 
 import br.com.cast.turmaformacao.taskmanager.R;
 import br.com.cast.turmaformacao.taskmanager.controllers.adpters.TaskListAdpater;
+import br.com.cast.turmaformacao.taskmanager.model.entities.Address;
 import br.com.cast.turmaformacao.taskmanager.model.entities.Task;
+import br.com.cast.turmaformacao.taskmanager.model.http.AddressService;
+import br.com.cast.turmaformacao.taskmanager.model.http.TaskService;
 import br.com.cast.turmaformacao.taskmanager.model.services.TaskBusinessServices;
 
 /**
@@ -28,6 +33,8 @@ public class TaskListActivity extends AppCompatActivity {
 
     private ListView listViewTaskList;
     private Task selectedTask;
+    private ProgressDialog progressDialog;
+    private List<Task> getTasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +75,7 @@ public class TaskListActivity extends AppCompatActivity {
                 onMenuAddClick();
                 break;
             case R.id.menu_up:
-            onMenuUpdateClick();
+                onMenuUpTask();
             break;
         }
 
@@ -106,15 +113,42 @@ public class TaskListActivity extends AppCompatActivity {
                 onMenuDeleteClick();
                 break;
             case R.id.menu_editar:
-                onMenuUpClick();
+                onMenuUpdateClick();
                 break;
         }
         return super.onContextItemSelected(item);
     }
 
-    private void onMenuUpClick() {
-
+    private void onMenuUpTask() {
+        new GetTasksWeb().execute("1");
     }
+
+    private class GetTasksWeb extends AsyncTask<String, Void, List<Task>> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(TaskListActivity.this);
+            progressDialog.setMessage("Carregando");
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected List<Task> doInBackground(String... params) {
+            return TaskService.getTasksWeb();
+        }
+
+        @Override
+        protected void onPostExecute(List<Task> tasks) {
+            getTasks = tasks;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
 
     private void onMenuUpdateClick() {
 

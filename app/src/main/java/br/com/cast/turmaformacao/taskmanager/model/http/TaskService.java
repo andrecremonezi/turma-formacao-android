@@ -51,6 +51,33 @@ public class TaskService {
     }
 
 
+    public static List<Task> getTasksWeb(){
+        List<Task> tasks = new ArrayList<>();
+
+        try {
+            java.net.URL url = new URL(URL);
+            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            int responseCode = conn.getResponseCode();
+
+            if(responseCode != HttpURLConnection.HTTP_OK) {
+                throw new RuntimeException("Error code: " + responseCode);
+            }
+
+            InputStream inputStream = conn.getInputStream();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            tasks = objectMapper.readValue(inputStream, objectMapper.getTypeFactory().constructType(List.class, Task.class));
+
+            conn.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tasks;
+    }
 
 
 }
