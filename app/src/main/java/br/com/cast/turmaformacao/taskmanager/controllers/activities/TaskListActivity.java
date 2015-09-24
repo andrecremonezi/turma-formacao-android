@@ -33,7 +33,6 @@ public class TaskListActivity extends AppCompatActivity {
 
     private ListView listViewTaskList;
     private Task selectedTask;
-    private ProgressDialog progressDialog;
     private List<Task> getTasks;
 
     @Override
@@ -120,10 +119,12 @@ public class TaskListActivity extends AppCompatActivity {
     }
 
     private void onMenuUpTask() {
-        new GetTasksWeb().execute("1");
+        new GetTasksWeb().execute();
     }
 
-    private class GetTasksWeb extends AsyncTask<String, Void, List<Task>> {
+    private class GetTasksWeb extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog progressDialog;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -134,13 +135,16 @@ public class TaskListActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<Task> doInBackground(String... params) {
-            return TaskService.getTasksWeb();
+        protected Void doInBackground(Void... params) {
+            TaskBusinessServices.sincronized();
+            return null;
         }
 
         @Override
-        protected void onPostExecute(List<Task> tasks) {
-            getTasks = tasks;
+        protected void onPostExecute(Void avoid) {
+            super.onPostExecute(avoid);
+            progressDialog.dismiss();
+            onUpdateList();
         }
 
         @Override

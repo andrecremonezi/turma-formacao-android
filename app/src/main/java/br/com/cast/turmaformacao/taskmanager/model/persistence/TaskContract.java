@@ -16,12 +16,12 @@ public final class TaskContract {
 
     public static final String TABLE = "task";
     public static final String ID = "id";
-    public static final String WEB_ID = "web_id";
+    public static final String WEBID = "webid";
     public static final String NAME = "name";
     public static final String DESCRIPTION = "description";
     public static final String LABEL_ID = "label_id";
 
-    public static final String[] COLUNS = {ID, WEB_ID, NAME, DESCRIPTION,LABEL_ID};
+    public static final String[] COLUNS = {ID, WEBID, NAME, DESCRIPTION,LABEL_ID};
 
     private TaskContract() {
         super();
@@ -34,7 +34,7 @@ public final class TaskContract {
         create.append(" CREATE TABLE " + TABLE);
         create.append(" ( ");
         create.append(ID + " INTEGER PRIMARY KEY, ");
-        create.append(WEB_ID + " INTEGER UNIQUE, ");
+        create.append(WEBID + " INTEGER UNIQUE, ");
         create.append(NAME + " TEXT NOT NULL, ");
         create.append(DESCRIPTION + " TEXT, ");
         create.append(LABEL_ID + " INTEGER ");
@@ -47,10 +47,10 @@ public final class TaskContract {
         ContentValues values = new ContentValues();
 
         values.put(TaskContract.ID, task.getId());
-        values.put(TaskContract.WEB_ID, String.valueOf(task.getwebId()));
+        values.put(TaskContract.WEBID, String.valueOf(task.getWebId()));
         values.put(TaskContract.NAME, task.getName());
         values.put(TaskContract.DESCRIPTION, task.getDescription());
-        values.put(TaskContract.LABEL_ID, task.getLabel().getId());
+        values.put(TaskContract.LABEL_ID, task.getLabel() == null ? null : task.getLabel().getId());
 
         return values;
     }
@@ -60,7 +60,7 @@ public final class TaskContract {
         if (!cursor.isBeforeFirst() || cursor.moveToNext()) {
             Task task = new Task();
             task.setId(cursor.getLong(cursor.getColumnIndex(TaskContract.ID)));
-            task.setwebId(cursor.getLong(cursor.getColumnIndex(TaskContract.WEB_ID)));
+            task.setWebId(cursor.getLong(cursor.getColumnIndex(TaskContract.WEBID)));
             task.setName(cursor.getString(cursor.getColumnIndex(TaskContract.NAME)));
             task.setDescription(cursor.getString(cursor.getColumnIndex(TaskContract.DESCRIPTION)));
             task.setLabel(new Label());

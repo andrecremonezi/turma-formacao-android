@@ -1,5 +1,8 @@
 package br.com.cast.turmaformacao.taskmanager.model.http;
 
+import android.app.Application;
+import android.widget.Toast;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONArray;
@@ -12,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.cast.turmaformacao.taskmanager.controllers.activities.TaskListActivity;
 import br.com.cast.turmaformacao.taskmanager.model.entities.Address;
 import br.com.cast.turmaformacao.taskmanager.model.entities.Task;
 
@@ -69,7 +73,7 @@ public class TaskService {
             InputStream inputStream = conn.getInputStream();
 
             ObjectMapper objectMapper = new ObjectMapper();
-            tasks = objectMapper.readValue(inputStream, objectMapper.getTypeFactory().constructType(List.class, Task.class));
+            tasks = objectMapper.readValue(inputStream, objectMapper.getTypeFactory().constructCollectionType(List.class, Task.class));
 
             conn.disconnect();
         } catch (IOException e) {

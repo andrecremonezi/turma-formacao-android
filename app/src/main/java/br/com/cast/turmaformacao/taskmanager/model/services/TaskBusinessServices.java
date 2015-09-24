@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.cast.turmaformacao.taskmanager.model.entities.Task;
+import br.com.cast.turmaformacao.taskmanager.model.http.TaskService;
 import br.com.cast.turmaformacao.taskmanager.model.persistence.LabelRepository;
 import br.com.cast.turmaformacao.taskmanager.model.persistence.TaskRepository;
 
@@ -32,4 +33,19 @@ public final class TaskBusinessServices {
         TaskRepository.delete(task.getId());
     }
 
+    public static void sincronized() {
+
+        List<Task> webTasks = TaskService.getTasksWeb();
+
+
+
+        for(Task task : webTasks){
+
+            Long id = TaskRepository.getIdByWebId(task.getWebId());
+
+            task.setId(id == null ? null : id);
+
+            save(task);
+        }
+    }
 }

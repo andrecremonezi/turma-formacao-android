@@ -19,7 +19,6 @@ public class Task implements Parcelable {
     private String description;
 
 
-
     public Task() {
         super();
     }
@@ -29,11 +28,11 @@ public class Task implements Parcelable {
         readFromParcel(imp);
     }
 
-    public void setwebId(Long webId) {
+    public void setWebId(Long webId) {
         this.webId = webId;
     }
 
-    public Long getwebId() {
+    public Long getWebId() {
         return webId;
     }
 
@@ -77,27 +76,31 @@ public class Task implements Parcelable {
 
         Task task = (Task) o;
 
-        if(!webId.equals(task.webId)) return false;
-        if (!id.equals(task.id)) return false;
-        if (!name.equals(task.name)) return false;
-        return description.equals(task.description);
+        if (label != null ? !label.equals(task.label) : task.label != null) return false;
+        if (id != null ? !id.equals(task.id) : task.id != null) return false;
+        if (webId != null ? !webId.equals(task.webId) : task.webId != null) return false;
+        if (name != null ? !name.equals(task.name) : task.name != null) return false;
+        return !(description != null ? !description.equals(task.description) : task.description != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + webId.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + description.hashCode();
+        int result = label != null ? label.hashCode() : 0;
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (webId != null ? webId.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
+
+
 
     @Override
     public String toString() {
         return "Task{" +
-                "webId=" + webId +
-                "id=" + id +
+                "Web_id=" + webId +
+                ", id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
@@ -110,19 +113,25 @@ public class Task implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(webId == null ? -1 : webId);
         dest.writeLong(id == null ? -1 : id);
+        dest.writeLong(webId == null ? -1 : webId);
         dest.writeString(name == null ? "" : name);
         dest.writeString(description == null ? "" : description);
+        dest.writeParcelable(label == null ? new Label() : label, flags);
     }
 
     public void readFromParcel(Parcel imp) {
 
         id = imp.readLong();
-        webId = webId == -1 ? null : webId;
         id = id == -1 ? null : id;
+
+        webId = imp.readLong();
+        webId = webId == -1 ? null : webId;
+
         name = imp.readString();
         description = imp.readString();
+
+        label = imp.readParcelable(Label.class.getClassLoader());
 
     }
 

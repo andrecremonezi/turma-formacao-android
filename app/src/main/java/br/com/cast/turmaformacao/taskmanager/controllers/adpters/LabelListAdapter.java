@@ -52,7 +52,9 @@ public class LabelListAdapter extends BaseAdapter{
         textName.setText(label.getName());
         textDescricao.setText(label.getDescription());
 
-        int hexColor = android.graphics.Color.parseColor(label.getColor().getHex());
+        String color = label.getColor() == null ? "#ffffff" : label.getColor().getHex();
+
+        int hexColor = android.graphics.Color.parseColor(color);
 
         textColor.setBackgroundColor(hexColor);
 
