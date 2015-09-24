@@ -1,6 +1,7 @@
 package br.com.cast.turmaformacao.taskmanager.controllers.activities;
 
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -66,6 +67,9 @@ public class TaskListActivity extends AppCompatActivity {
             case R.id.menu_add:
                 onMenuAddClick();
                 break;
+            case R.id.menu_up:
+            onMenuUpdateClick();
+            break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -102,10 +106,14 @@ public class TaskListActivity extends AppCompatActivity {
                 onMenuDeleteClick();
                 break;
             case R.id.menu_editar:
-                onMenuUpdateClick();
+                onMenuUpClick();
                 break;
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void onMenuUpClick() {
+
     }
 
     private void onMenuUpdateClick() {

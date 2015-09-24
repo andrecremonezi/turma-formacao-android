@@ -38,6 +38,8 @@
     <string name="lbl_state">State</string>
     <string name="lbl_type">Type</string>
     <string name="lbl_buscar">Search</string>
+    <string name="lbl_webId">Web Id</string>
+    <string name="lbl_menu_update">Update</string>
 
 
 </resources>

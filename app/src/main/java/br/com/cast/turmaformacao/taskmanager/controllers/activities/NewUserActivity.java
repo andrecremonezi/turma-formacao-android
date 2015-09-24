@@ -1,5 +1,6 @@
 package br.com.cast.turmaformacao.taskmanager.controllers.activities;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class NewUserActivity extends AppCompatActivity {
     private EditText editTextCity;
     private EditText editTextState;
     private User user;
+    private ProgressDialog progressDialog;
     public static final String PARAM_TASK = "PARAM_TASK";
 
     @Override
@@ -47,6 +49,10 @@ public class NewUserActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = new ProgressDialog(NewUserActivity.this);
+            progressDialog.setMessage("Carregando");
+            progressDialog.show();
+
         }
 
         @Override
@@ -57,6 +63,12 @@ public class NewUserActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Address address) {
             super.onPostExecute(address);
+            progressDialog.dismiss();
+            editTextCity.setText(address.getCity().toString());
+            editTextState.setText(address.getState().toString());
+            editTextType.setText(address.getType().toString());
+            editTextNeighborhood.setText(address.getNeighborhood().toString());
+            editTextStreet.setText(address.getStreet().toString());
         }
 
         @Override

@@ -1,8 +1,11 @@
 package br.com.cast.turmaformacao.taskmanager.model.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Address {
+public class Address implements Parcelable{
 
     @JsonProperty("cep")
     private String zipCode;
@@ -29,6 +32,15 @@ public class Address {
         this.neighborhood = neighborhood;
         this.city = city;
         this.state = state;
+    }
+
+    public Address(){
+        super();
+    }
+
+    public Address(Parcel in){
+        super();
+        readToParcel(in);
     }
 
     public String getZipCode() {
@@ -105,4 +117,38 @@ public class Address {
         result = 31 * result + state.hashCode();
         return result;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(zipCode == null ? "" : zipCode);
+        dest.writeString(type == null ? "" : type);
+        dest.writeString(street == null ? "" : street);
+        dest.writeString(neighborhood == null ? "" : neighborhood);
+        dest.writeString(city == null ? "" : city);
+        dest.writeString(state == null ? "" : state);
+    }
+
+    public void readToParcel(Parcel in) {
+        zipCode = in.readString();
+        type = in.readString();
+        street = in.readString();
+        neighborhood = in.readString();
+        city = in.readString();
+        state = in.readString();
+    }
+
+    public static final Parcelable.Creator<Address> CREATOR = new Parcelable.Creator<Address>() {
+        public Address createFromParcel(Parcel source) {
+            return new Address(source);
+        }
+
+        public Address[] newArray(int size) {
+            return new Address[size];
+        }
+    };
 }

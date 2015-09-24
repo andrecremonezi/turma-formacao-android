@@ -1,6 +1,8 @@
 package br.com.cast.turmaformacao.taskmanager.controllers.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -13,8 +15,11 @@ import java.util.List;
 
 import br.com.cast.turmaformacao.taskmanager.R;
 import br.com.cast.turmaformacao.taskmanager.controllers.adpters.LabelListAdapter;
+import br.com.cast.turmaformacao.taskmanager.model.entities.Address;
 import br.com.cast.turmaformacao.taskmanager.model.entities.Label;
 import br.com.cast.turmaformacao.taskmanager.model.entities.Task;
+import br.com.cast.turmaformacao.taskmanager.model.http.AddressService;
+import br.com.cast.turmaformacao.taskmanager.model.http.TaskService;
 import br.com.cast.turmaformacao.taskmanager.model.services.LabelBusinessServices;
 import br.com.cast.turmaformacao.taskmanager.model.services.TaskBusinessServices;
 import br.com.cast.turmaformacao.taskmanager.util.FormHelper;
@@ -26,6 +31,7 @@ public class TaskFormActivity extends AppCompatActivity {
     private Button buttonSave;
     private Button buttonNewLabel;
     private Task task;
+    private ProgressDialog progressDialog;
     public static final String PARAM_TASK = "PARAM_TASK";
 
     @Override
@@ -40,6 +46,38 @@ public class TaskFormActivity extends AppCompatActivity {
         bindButtonNewLabel();
         bindButtonSave();
     }
+
+
+    private class GetTaskWeb extends AsyncTask<String, Void, Task> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(TaskFormActivity.this);
+            progressDialog.setMessage("Carregando");
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected Task doInBackground(String... params) {
+
+            return TaskService.getTaskByWebId(Long.parseLong(params[0]));
+        }
+
+        @Override
+        protected void onPostExecute(Task task) {
+            super.onPostExecute(task);
+            progressDialog.dismiss();
+            editTextName.setText(task.getName().toString());
+            editTextDescription.setText(task.getDescription().toString());
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+    }
+
 
     @Override
     protected void onResume() {

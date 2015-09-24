@@ -1,29 +1,32 @@
 package br.com.cast.turmaformacao.taskmanager.model.http;
 
-
-import android.util.Log;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.cast.turmaformacao.taskmanager.model.entities.Address;
+import br.com.cast.turmaformacao.taskmanager.model.entities.Task;
 
-public class AddressService {
+public class TaskService {
 
-    private static final String URL = "http://correiosapi.apphb.com/cep/";
+    private static final String URL = "http://10.11.21.193:3000/api/v1/task/";
 
-    private AddressService(){
+    private TaskService(){
         super();
     }
 
-
-    public static Address getAddressByZipCode(String zipCode){
-        Address address = null;
+    public static Task getTaskByWebId(Long webId){
+        Task task = null;
         try {
-            URL url = new URL(URL + zipCode);
+            java.net.URL url = new URL(URL + webId);
             final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -37,15 +40,17 @@ public class AddressService {
             InputStream inputStream = conn.getInputStream();
 
             ObjectMapper objectMapper = new ObjectMapper();
-            address = objectMapper.readValue(inputStream, Address.class);
+            task = objectMapper.readValue(inputStream, Task.class);
 
             conn.disconnect();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return address;
+        return task;
     }
+
+
 
 
 }

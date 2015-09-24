@@ -39,5 +39,7 @@
     <string name="lbl_state">Estado</string>
     <string name="lbl_type">Tipo</string>
     <string name="lbl_buscar">Buscar</string>
+    <string name="lbl_webId">Id da Web</string>
+    <string name="lbl_menu_update">Atualizar</string>
 
 </resources>
